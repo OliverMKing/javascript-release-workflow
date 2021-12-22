@@ -1,0 +1,35 @@
+name: "Create release branch"
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: "Define release version (ex: v1, v2.3)"
+        required: true
+
+jobs:
+  createPullRequest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install packages
+        run: |
+          npm install --no-bin-links
+          npm run build
+      - name: Remove node_modules from gitignore
+        run: |
+          sed -i '/node_modules/d' ./.gitignore
+      - name: Create branch
+        uses: peterjgrainger/action-create-branch@v2.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: releases/${{ github.event.inputs.release }}
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Add node modules
+          title: Create ${{ github.event.inputs.release }} release branch
+          base: releases/${{ github.event.inputs.release }}
+          delete-branch: true
