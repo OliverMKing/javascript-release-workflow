@@ -1,4 +1,4 @@
-name: "Create release"
+name: "Create and tag release"
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
         id: extract_branch
       - uses: "marvinpinto/action-automatic-releases@v1.2.1"
         with:
-          title: New release
+          title: New ${{ steps.extract_branch.outputs.branch }} release
           automatic_release_tag: ${{ steps.extract_branch.outputs.branch }}
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           draft: true
