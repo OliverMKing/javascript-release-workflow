@@ -29,4 +29,4 @@ You can easily modify these workflows to fit other types of projects. Simply mod
 
 ## Planned updates
 
-- Modify logic to push to a overarching version branch (ex: `v1` or `v2`) and only sub tag different releases with tags like `v1.1` and `v2.3.1`.
+- Modify logic to push to an overarching version branch (ex: `v1` or `v2`) and only sub tag different releases with tags like `v1.1` and `v2.3.1`.
