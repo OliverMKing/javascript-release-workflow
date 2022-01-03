@@ -19,9 +19,54 @@ jobs:
       - name: Get branch ending
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/} | sed 's:.*/::')"
         id: extract_branch
+      - name: Get tags
+        run: echo "##[set-output name=tags;]$(echo $(git tag))"
+        id: extract_tags
+      - uses: actions/github-script@v5
+        with:
+          script: |
+            const tags = steps.extract_tags.outputs.tags
+              .split(" ")
+              .map((x) => x.trim());
+            const branch = "v3";
+
+            const splitTag = (x) =>
+              x
+                .substring(branch.length + 1)
+                .split(".")
+                .map((x) => Number(x));
+
+            function compareTags(nums1, nums2, position = 0) {
+              if (nums1.length < position && nums2.length < position) return nums2;
+
+              const num1 = splitTag(nums1)[position] || 0;
+              const num2 = splitTag(nums2)[position] || 0;
+
+              if (num1 === num2) return compareTags(nums1, nums2, position + 1);
+              else if (num1 > num2) return nums1;
+              else return nums2;
+            }
+
+            const branchTags = tags.filter((tag) => tag.startsWith(branch));
+            return branchTags.reduce((prev, curr) => compareTags(prev, curr));
+          result-encoding: string
+        id: get_latest_tag
+      - uses: actions/github-script@v5
+        with:
+          script: |
+            let version = steps.get_latest_tag.outputs.result
+            if (!version.includes(".")) version += ".0"; // case of v1 or v2
+            const prefix = /^([a-zA-Z]+)/.exec(version)[0];
+            const numbers = version.substring(prefix.length);
+            let split = numbers.split(".");
+            split[split.length - 1] = parseInt(split[split.length - 1]) + 1;
+            return prefix + split.join(".");
+          result-encoding: string
+        id: get_new_tag
+
       - uses: "marvinpinto/action-automatic-releases@v1.2.1"
         with:
           title: New ${{ steps.extract_branch.outputs.branch }} release
-          automatic_release_tag: ${{ steps.extract_branch.outputs.branch }}
+          automatic_release_tag: ${{ steps.get_new_tag.outputs.result }}
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           draft: true
