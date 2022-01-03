@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       release:
-        description: "Define release version (ex: v1, v2.3)"
+        description: "Define release branch (ex: v1, v2, v3)"
         required: true
 
 jobs:
@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Install packages
         run: |
           rm -rf node_modules/
@@ -21,6 +23,7 @@ jobs:
         run: |
           sed -i '/node_modules/d' ./.gitignore
       - name: Create branch
+        # continue-on-error: true test if needed
         uses: peterjgrainger/action-create-branch@v2.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
