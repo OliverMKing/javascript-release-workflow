@@ -1,8 +1,10 @@
 # javascript-release-workflow
 
-Github workflow to simplify creating a release for a Node.js action. This will automatically increment the version of a tag (ex: v1.1 -> v1.2, v2 -> v2.1). New releases are cut from the main (or master) branch.
+Github workflow to simplify creating a release for a Node.js action. This will automatically increment the version of a tag (ex: v1.1 -> v1.2, v2 -> v2.1).
 
-This was created for the specific workflow of two digit release names (first number for major / breaking improvements and 2nd number for smaller changes). Major releases are stored on a `releases/v1` branch with the number corresponding to the major version. Modifying this workflow to support other workflows would be simple.
+New releases are cut from the main (or master) branch. When creating a release branch PR we install all `node_modules` and execute `npm run build`. A draft release will also be created if any branch with the prefix `releases/` is pushed to.
+
+This was created for the specific workflow of two digit release names (first number for major / breaking improvements and 2nd number for smaller changes). Major releases are stored on a `releases/v1` branch with the number corresponding to the major version. Modifying this workflow to support other workflows would be trivial.
 
 Previously, to create a release for a Node.js project, developers had to:
 
