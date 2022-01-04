@@ -1,10 +1,10 @@
-name: "Create release branch"
+name: "Create release PR"
 
 on:
   workflow_dispatch:
     inputs:
       release:
-        description: "Define release branch (ex: v1, v2, v3)"
+        description: "Define release version (ex: v1, v2, v3)"
         required: true
 
 jobs:
@@ -14,6 +14,23 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - name: Check if remote branch exists
+        env:
+          BRANCH: releases/${{ github.event.inputs.release }}
+        run: |
+          echo "##[set-output name=exists;]$(echo $(if [[ -z $(git ls-remote --heads origin ${BRANCH}) ]]; then echo false; else echo true; fi;))"
+        id: extract-branch-status
+      # these two only need to occur if the branch exists
+      - name: Checkout proper branch
+        if: ${{ steps.extract-branch-status.outputs.exists == 'true' }}
+        env:
+          BRANCH: releases/${{ github.event.inputs.release }}
+        run: git checkout ${BRANCH}
+      - name: Reset promotion branch
+        if: ${{ steps.extract-branch-status.outputs.exists == 'true' }}
+        run: |
+          git fetch origin master:master
+          git reset --hard master
       - name: Install packages
         run: |
           rm -rf node_modules/
@@ -23,7 +40,6 @@ jobs:
         run: |
           sed -i '/node_modules/d' ./.gitignore
       - name: Create branch
-        # continue-on-error: true test if needed
         uses: peterjgrainger/action-create-branch@v2.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -33,7 +49,8 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: Add node modules
-          title: Create ${{ github.event.inputs.release }} release branch
+          commit-message: Add node modules and new code for release
+          title: ${{ github.event.inputs.release }} new release
           base: releases/${{ github.event.inputs.release }}
+          branch: create-release
           delete-branch: true
