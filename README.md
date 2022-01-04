@@ -18,7 +18,7 @@ These workflows automate the process.
 
 ## Usage
 
-Copy the yaml files ([release-branch-pr.yml](./release-branch-pr.yml) and [tag-and-release.yml](./tag-and-release.yml)) in this repository to your `.github` folder. Replace `master` in the `Reset promotion branch` step ([release-branch-pr.yml](./release-branch-pr.yml)) depending on your repo.
+Copy the yaml files ([release-pr.yml](./release-pr.yml) and [tag-and-release.yml](./tag-and-release.yml)) in this repository to your `.github` folder. Replace `master` in the `Reset promotion branch` step ([release-pr.yml](./release-pr.yml)) depending on your repo.
 
 When you want to create a workflow follow these steps:
 
