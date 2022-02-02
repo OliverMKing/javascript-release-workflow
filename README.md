@@ -34,7 +34,7 @@ on:
         description: "Define release version (ex: v1, v2, v3)"
         required: true
 
-job:
+jobs:
   release-pr:
     uses: OliverMKing/javascript-release-workflow/release-pr.yml@main
     with:
@@ -52,7 +52,7 @@ on:
     branches:
       - releases/*
 
-job:
+jobs:
   tag-and-release:
     uses: OliverMKing/javascript-release-workflow/tag-and-release.yml@main
 ```
