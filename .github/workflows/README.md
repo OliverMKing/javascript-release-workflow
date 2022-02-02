@@ -57,7 +57,7 @@ jobs:
     uses: OliverMKing/javascript-release-workflow/tag-and-release.yml@main
 ```
 
-Alternatively, you can copy the yaml files ([release-pr.yml](./release-pr.yml) and [tag-and-release.yml](./tag-and-release.yml)) in this repository to your `.github` folder. Replace `main` with `master` in the `Reset promotion branch` step ([release-pr.yml](./release-pr.yml)) depending on your repo. This approach allows you to customize the steps past this very specialized workflow
+Alternatively, you can copy the yaml files ([release-pr.yml](./.github/workflows/release-pr.yml) and [tag-and-release.yml](./.github/workflows/tag-and-release.yml)) in this repository to your `.github` folder. Replace `main` with `master` in the `Reset promotion branch` step ([./.github/workflows/release-pr.yml](./.github/workflows/release-pr.yml)) depending on your repo. This approach allows you to customize the steps past this very specialized workflow
 
 When you want to create a workflow follow these steps:
 
