@@ -36,7 +36,7 @@ job:
   release-pr:
     uses: OliverMKing/javascript-release-workflow/release-pr.yml@main
     with:
-      release: {{ github.event.inputs.release }}
+      release: ${{ github.event.inputs.release }}
 ```
 
 and
