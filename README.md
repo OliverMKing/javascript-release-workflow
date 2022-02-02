@@ -10,6 +10,7 @@ Previously, to create a release for a Node.js project, developers had to:
 
 - Create a new branch (if a new major version)
 - Remove node_modules and remove them from .gitignore
+- Remove lib from .gitignore
 - Run `npm install --no-bin-links`
 - Push to the new branch
 - Check which tag should be used
