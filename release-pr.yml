@@ -20,7 +20,7 @@ jobs:
         run: |
           echo "##[set-output name=exists;]$(echo $(if [[ -z $(git ls-remote --heads origin ${BRANCH}) ]]; then echo false; else echo true; fi;))"
         id: extract-branch-status
-      # these two only need to occur if the branch exists
+        # these two only need to occur if the branch exists
       - name: Checkout proper branch
         if: ${{ steps.extract-branch-status.outputs.exists == 'true' }}
         env:
@@ -37,8 +37,13 @@ jobs:
           npm install --no-bin-links
           npm run build
       - name: Remove node_modules from gitignore
+        continue-on-error: true
         run: |
           sed -i '/node_modules/d' ./.gitignore
+      - name: Remove lib from gitignore
+        continue-on-error: true
+        run: |
+          sed -i '/lib/d' ./.gitignore
       - name: Create branch
         uses: peterjgrainger/action-create-branch@v2.0.1
         env:
