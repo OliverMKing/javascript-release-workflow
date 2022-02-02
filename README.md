@@ -20,20 +20,38 @@ These workflows automate the process.
 
 ## Usage
 
-Add the following to your workflow files for a [reusable workflow](https://docs.github.com/en/actions/using-workflows/reusing-workflows).
+Add the following two workflow files to your `.github/workflows` folder for a [reusable workflow](https://docs.github.com/en/actions/using-workflows/reusing-workflows).
 
 ```yaml
-release-pr:
-  uses: OliverMKing/javascript-release-workflow/release-pr.yml@main
-  with:
-    release: {{ github.event.inputs.release }}
+name: "Create release PR"
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: "Define release version (ex: v1, v2, v3)"
+        required: true
+
+job:
+  release-pr:
+    uses: OliverMKing/javascript-release-workflow/release-pr.yml@main
+    with:
+      release: {{ github.event.inputs.release }}
 ```
 
 and
 
 ```yaml
-tag-and-release:
-  uses: OliverMKing/javascript-release-workflow/tag-and-release.yml@main
+name: "Tag and create release draft"
+
+on:
+  push:
+    branches:
+      - releases/*
+
+job:
+  tag-and-release:
+    uses: OliverMKing/javascript-release-workflow/tag-and-release.yml@main
 ```
 
 Alternatively, you can copy the yaml files ([release-pr.yml](./release-pr.yml) and [tag-and-release.yml](./tag-and-release.yml)) in this repository to your `.github` folder. Replace `main` with `master` in the `Reset promotion branch` step ([release-pr.yml](./release-pr.yml)) depending on your repo.
