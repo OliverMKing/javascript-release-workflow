@@ -24,7 +24,7 @@ These workflows automate the process.
 Add the following two workflow files to your `.github/workflows` folder for a [reusable workflow](https://docs.github.com/en/actions/using-workflows/reusing-workflows).
 
 ```yaml
-name: "Create release PR"
+name: Create release PR
 
 on:
   workflow_dispatch:
@@ -43,7 +43,7 @@ job:
 and
 
 ```yaml
-name: "Tag and create release draft"
+name: Tag and create release draft
 
 on:
   push:
