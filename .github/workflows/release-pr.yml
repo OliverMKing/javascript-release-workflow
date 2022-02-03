@@ -26,9 +26,11 @@ jobs:
         env:
           BRANCH: releases/${{ github.event.inputs.release }}
         run: git checkout ${BRANCH}
-      - name: Reset promotion branch
+      - name: Merge 
         if: ${{ steps.extract-branch-status.outputs.exists == 'true' }}
         run: |
+          git config --global user.email "oking3@uncc.edu"
+          git config --global user.name "Oliver King"
           git fetch origin main:main
           git merge -X theirs main
       - name: Install ncc
