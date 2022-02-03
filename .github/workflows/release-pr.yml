@@ -4,8 +4,8 @@ on:
   workflow_call:
     inputs:
       release:
-        description: "Define release version (ex: v1, v2, v3)"
         required: true
+        type: string
 
 jobs:
   createPullRequest:
