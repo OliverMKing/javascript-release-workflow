@@ -31,7 +31,7 @@ on:
   workflow_dispatch:
     inputs:
       release:
-        description: "Define release version (ex: v1, v2, v3)"
+        description: "Define release major version (ex: v1, v2, v3)"
         required: true
 
 jobs:
