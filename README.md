@@ -36,7 +36,7 @@ on:
 
 jobs:
   release-pr:
-    uses: OliverMKing/javascript-release-workflow/release-pr.yml@main
+    uses: OliverMKing/javascript-release-workflow/.github/workflows/release-pr.yml@main
     with:
       release: ${{ github.event.inputs.release }}
 ```
@@ -54,7 +54,7 @@ on:
 
 jobs:
   tag-and-release:
-    uses: OliverMKing/javascript-release-workflow/tag-and-release.yml@main
+    uses: OliverMKing/javascript-release-workflow/.github/workflows/tag-and-release.yml@main
 ```
 
 When you want to create a workflow follow these steps:
