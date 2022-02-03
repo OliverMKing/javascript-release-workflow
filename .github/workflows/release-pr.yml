@@ -30,12 +30,15 @@ jobs:
         if: ${{ steps.extract-branch-status.outputs.exists == 'true' }}
         run: |
           git fetch origin main:main
-          git reset --hard main
+          git merge -X theirs main
+      - name: Install ncc
+        run: npm i -g @vercel/ncc
       - name: Install packages
         run: |
           rm -rf node_modules/
           npm install --no-bin-links
-          npm run build
+      - name: Build
+        run: ncc build src/run.ts -o lib
       - name: Remove node_modules from gitignore
         continue-on-error: true
         run: |
