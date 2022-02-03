@@ -44,6 +44,11 @@ jobs:
         continue-on-error: true
         run: |
           sed -i '/lib/d' ./.gitignore
+      - name: Create commit
+        run: |
+          git config user.name 'Oliver King'
+          git config user.email 'oking3@uncc.edu'
+          git commit -am "Add node modules and compiled JavaScript from main"
       - name: Create branch
         uses: peterjgrainger/action-create-branch@v2.0.1
         env:
