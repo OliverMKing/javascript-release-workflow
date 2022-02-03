@@ -60,6 +60,7 @@ jobs:
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3
         with:
+          author: Oliver King <oking3@uncc.edu>
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Add node modules and compiled JavaScript from main
           title: ${{ github.event.inputs.release }} new release
