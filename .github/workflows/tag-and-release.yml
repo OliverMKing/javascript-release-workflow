@@ -1,9 +1,7 @@
 name: "Tag and create release draft"
 
 on:
-  push:
-    branches:
-      - releases/*
+  workflow_call:
 
 jobs:
   gh_tagged_release:
