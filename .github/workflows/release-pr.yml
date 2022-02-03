@@ -26,11 +26,13 @@ jobs:
         env:
           BRANCH: releases/${{ github.event.inputs.release }}
         run: git checkout ${BRANCH}
-      - name: Merge 
-        if: ${{ steps.extract-branch-status.outputs.exists == 'true' }}
+      - name: Set git user
         run: |
           git config --global user.email "oking3@uncc.edu"
           git config --global user.name "Oliver King"
+      - name: Merge 
+        if: ${{ steps.extract-branch-status.outputs.exists == 'true' }}
+        run: |
           git fetch origin main:main
           git merge -X theirs main
       - name: Install ncc
@@ -49,11 +51,6 @@ jobs:
         continue-on-error: true
         run: |
           sed -i '/lib/d' ./.gitignore
-      - name: Create commit
-        run: |
-          git config user.name 'Oliver King'
-          git config user.email 'oking3@uncc.edu'
-          git commit -am "Add node modules and compiled JavaScript from main"
       - name: Create branch
         uses: peterjgrainger/action-create-branch@v2.0.1
         env:
@@ -64,7 +61,7 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: Add node modules and new code for release
+          commit-message: Add node modules and compiled JavaScript from main
           title: ${{ github.event.inputs.release }} new release
           base: releases/${{ github.event.inputs.release }}
           branch: create-release
