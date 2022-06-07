@@ -67,9 +67,26 @@ jobs:
             return prefix + split.join(".");
           result-encoding: string
         id: get-new-tag
+      - name: Get new major tag
+        uses: actions/github-script@v5
+        env:
+          PREV: ${{ steps.get-new-tag.outputs.result }}
+        with:
+          script: |
+            const tag = process.env["PREV"]
+            const split = tag.split(".");
+            return split[0];
+          result-encoding: string
+        id: get-major-tag
       - uses: "marvinpinto/action-automatic-releases@v1.2.1"
         with:
           title: ${{ steps.get-new-tag.outputs.result }} release
           automatic_release_tag: ${{ steps.get-new-tag.outputs.result }}
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          draft: true
+          draft: false
+      - uses: "marvinpinto/action-automatic-releases@v1.2.1"
+        with:
+          title: ${{ steps.get-major-tag.outputs.result }} latest release
+          automatic_release_tag: ${{ steps.get-major-tag.outputs.result }}
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          draft: false 
