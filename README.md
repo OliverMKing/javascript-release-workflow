@@ -65,6 +65,6 @@ When you want to create a workflow follow these steps:
 - Select `Create release PR` on the left side
 - Select `Run workflow` then enter your release version (ex: v1, v2, v3)
 - Find the created pull request and approve it (it may take a minute for the workflow to create the new release)
-- Go to `Releases` then edit the created release (edit title, add release notes) and publish release
+- Go to `Releases` then edit the created releases (edit title, add release notes) and publish them
 
 Note: Workflows won't be run on PRs triggered by other actions. Close the PR then reopen it if you want workflows to be run.
