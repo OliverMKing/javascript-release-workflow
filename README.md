@@ -21,7 +21,7 @@ Previously, to create a release for a Node.js project, developers had to:
 
 These workflows automate the process.
 
-## Usage
+## Installation
 
 Add the following two workflow files to your `.github/workflows` folder for a [reusable workflow](https://docs.github.com/en/actions/using-workflows/reusing-workflows).
 
@@ -58,6 +58,8 @@ jobs:
   tag-and-release:
     uses: OliverMKing/javascript-release-workflow/.github/workflows/tag-and-release.yml@main
 ```
+
+## Usage
 
 When you want to create a release follow these steps:
 
