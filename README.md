@@ -59,7 +59,7 @@ jobs:
     uses: OliverMKing/javascript-release-workflow/.github/workflows/tag-and-release.yml@main
 ```
 
-When you want to create a workflow follow these steps:
+When you want to create a release follow these steps:
 
 - Go to the `Actions` tab of your Github repository
 - Select `Create release PR` on the left side
