@@ -75,3 +75,10 @@ jobs:
           base: releases/${{ github.event.inputs.release }}
           branch: create-release
           delete-branch: true
+      - name: Final Merge
+        env:
+          BRANCH: releases/${{ github.event.inputs.release }}
+        run: |
+          git checkout create-release
+          git merge --ours ${BRANCH}
+          git push
