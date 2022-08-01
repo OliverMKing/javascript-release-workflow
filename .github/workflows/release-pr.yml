@@ -36,10 +36,11 @@ jobs:
           BRANCH: releases/${{ github.event.inputs.release }}
         run: |
           git fetch origin main:main
-          
           git checkout -b tmp origin/main
           git merge -s ours ${BRANCH}
           git checkout ${BRANCH}
+          git rm -r node_modules
+          rm -r node_modules
           git merge tmp
           git branch -D tmp
       - name: Install ncc
@@ -75,10 +76,3 @@ jobs:
           base: releases/${{ github.event.inputs.release }}
           branch: create-release
           delete-branch: true
-      - name: Final Merge
-        env:
-          BRANCH: releases/${{ github.event.inputs.release }}
-        run: |
-          git checkout create-release
-          git merge -s recursive -X ours ${BRANCH}
-          git push
