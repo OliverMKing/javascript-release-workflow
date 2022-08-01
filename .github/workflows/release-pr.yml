@@ -80,5 +80,5 @@ jobs:
           BRANCH: releases/${{ github.event.inputs.release }}
         run: |
           git checkout create-release
-          git merge --ours ${BRANCH}
+          git merge -X ours ${BRANCH}
           git push
