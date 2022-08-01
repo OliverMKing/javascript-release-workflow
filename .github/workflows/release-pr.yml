@@ -40,7 +40,6 @@ jobs:
           git merge -s ours ${BRANCH}
           git checkout ${BRANCH}
           git rm -r node_modules
-          rm -r node_modules
           git merge tmp
           git branch -D tmp
       - name: Install ncc
