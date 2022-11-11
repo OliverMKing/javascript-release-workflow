@@ -50,10 +50,6 @@ jobs:
           npm install --no-bin-links
       - name: Build
         run: ncc build src/run.ts -o lib
-      - name: Remove node_modules from gitignore
-        continue-on-error: true
-        run: |
-          sed -i '/node_modules/d' ./.gitignore
       - name: Remove lib from gitignore
         continue-on-error: true
         run: |
