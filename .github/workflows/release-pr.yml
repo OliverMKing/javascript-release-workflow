@@ -39,7 +39,7 @@ jobs:
           git checkout -b tmp origin/main
           git merge -s ours ${BRANCH}
           git checkout ${BRANCH}
-          git rm -r node_modules
+          git rm -r node_modules --ignore-unmatch
           git merge tmp
           git branch -D tmp
       - name: Install ncc
