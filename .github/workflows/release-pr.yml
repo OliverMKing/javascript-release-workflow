@@ -69,5 +69,4 @@ jobs:
           commit-message: Add node modules and compiled JavaScript from main
           title: ${{ github.event.inputs.release }} new release
           base: releases/${{ github.event.inputs.release }}
-          branch: create-release
           delete-branch: true
